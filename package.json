@@ -1,0 +1,16 @@
+{
+  "name": "@desco/atlas",
+  "version": "2.0.0",
+  "description": "Complete framework in NodeJS",
+  "main": "src/index.js",
+  "scripts": {},
+  "keywords": [
+    "nodejs",
+    "framework"
+  ],
+  "author": "Rafael A. R. Dias <eu@diasrafael.com.br>",
+  "license": "ISC",
+  "dependencies": {
+    "clear": "^0.1.0"
+  }
+}
