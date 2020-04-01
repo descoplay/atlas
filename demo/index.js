@@ -1,6 +1,13 @@
 const Atlas = require('@desco/atlas')
 
-Atlas.start({}).then(Atlas => {
-    console.log('Instancia do atlas retornada pela promessa:', Atlas)
-    console.log('Global Atlas', global.Atlas)
+const config = {
+    Console: {
+        notLog: true,
+    },
+}
+Atlas.start(config).then(Atlas => {
+    Atlas.Console.log('Instancia do atlas retornada pela promessa:')
+    Atlas.Console.log(Atlas)
+    Atlas.Console.log('Global Atlas')
+    Atlas.Console.log(global.Atlas)
 })
