@@ -11,6 +11,7 @@
   "author": "Rafael A. R. Dias <eu@diasrafael.com.br>",
   "license": "ISC",
   "dependencies": {
-    "clear": "^0.1.0"
+    "clear": "^0.1.0",
+    "object.map": "^1.0.1"
   }
 }

@@ -16,7 +16,7 @@ class Console {
         if ((Atlas.config.Console || {}).notLog) return
 
         // Se pediu para limpar o console, limpa
-        if (_params.clear) require('clear')()
+        if (_params.clear) Atlas.Imports.get('clear')()
 
         // Escreve a mensagem
         console.log(_msg)

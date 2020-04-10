@@ -2,7 +2,7 @@ const Atlas = require('@desco/atlas')
 
 const config = {
     Console: {
-        notLog: true,
+        notLog: false,
     },
 }
 Atlas.start(config).then(Atlas => {
