@@ -15,7 +15,7 @@ class Atlas {
 
         // Importa módulos
         this.Imports = require('./Imports')
-        this.Console = require('./Console')
+        this.Console = this.Imports.get('./Console')
 
         // Adiciona a instancia do Atlas nas propriedades globais no Node
         global.Atlas = this

@@ -1,5 +1,3 @@
-const Atlas = require('@desco/atlas')
-
 /**
  * @name Console
  * @description Módulo de mensagens no console do Atlas
@@ -13,10 +11,10 @@ class Console {
      */
     log (_msg, _params = {}) {
         // Se pediu para não exibir mensagem, ignora o resto
-        if ((Atlas.config.Console || {}).notLog) return
+        if ((global.Atlas.config.Console || {}).notLog) return;
 
         // Se pediu para limpar o console, limpa
-        if (_params.clear) Atlas.Imports.get('clear')()
+        if (_params.clear) global.Atlas.Imports.get('clear')()
 
         // Escreve a mensagem
         console.log(_msg)

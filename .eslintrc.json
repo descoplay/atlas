@@ -13,6 +13,7 @@
             "experimentalObjectRestSpread": true
         }
     },
+    "plugins": [ "jest" ],
     "rules": {
         "linebreak-style": 0,
         "quotes": [ "error", "single" ],
