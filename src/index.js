@@ -21,7 +21,6 @@ class Atlas {
         global.Atlas = this
 
         // Escreve o cabeçalho do Atlas na linha de comando
-        // header()
         this.Console.header()
 
         // Retorna promessa contendo instancia do Atlas

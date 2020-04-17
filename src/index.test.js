@@ -29,19 +29,17 @@ describe('Atlas', () => {
         expect(Atlas.Console).toBeDefined()
     })
 
-    test('Se o start() esta escrevendo o cabeçalho', () => {
+    test('Se o start() esta chamando o método de cabeçalho', () => {
         const Atlas = require('./index')
 
         let run = false
 
-        Imports.define('./Console', () => { header: () => run = true })
-
-        const Atlas = require('./Atlas')
+        Imports.define('./Console', { header: () => run = true })
 
         Atlas.start({ Console: { notLog: true, }, })
 
-        Imports.undefineAll()
-
         expect(run).toEqual(true)
+
+        Imports.undefineAll()
     })
 })
