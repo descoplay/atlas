@@ -1,4 +1,4 @@
-const Atlas = require('@desco/atlas')
+const Atlas = require('../src/index')
 
 const config = {
     Console: {
@@ -6,8 +6,7 @@ const config = {
     },
 }
 Atlas.start(config).then(Atlas => {
-    Atlas.Console.log('Instancia do atlas retornada pela promessa:')
-    Atlas.Console.log(Atlas)
-    Atlas.Console.log('Global Atlas')
-    Atlas.Console.log(global.Atlas)
+    Atlas.Console.success('Esta é uma de sucesso')
+    Atlas.Console.warning('Esta é uma mensagem com atenção')
+    Atlas.Console.error('Esta é uma mensagem de erro')
 })
