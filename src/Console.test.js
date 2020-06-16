@@ -1,65 +1,190 @@
 describe('Console', () => {
     const Imports = require('./Imports')
 
-    test('Se log() com clear: true esta chamando a limeza de tela', () => {
-        const Console = getModule()
+    describe('log()', () => {
+        test('Se com clear: true esta chamando a limeza de tela', () => {
+            const Console = getModule()
 
-        let run = false
+            let run = false
 
-        global.Atlas = { config: {}, Imports, }
+            Imports.define('clear', () => run = true)
+            Imports.defineConsole('log', () => {})
 
-        Imports.define('clear', () => run = true)
-        Imports.defineConsole('log', () => {})
+            Console.log('', { clear: true, })
 
-        Console.log('', { clear: true, })
+            expect(run).toEqual(true)
+        })
 
-        expect(run).toEqual(true)
+        test('Se esta imprimindo a mensagem desejada', () => {
+            const Console = getModule()
+
+            let msg = ''
+
+            Imports.defineConsole('log', (_params, _txt) => msg = _txt)
+
+            Console.log('escreveu')
+
+            expect(msg).toEqual('escreveu')
+        })
+
+        test('Se com breakLine: true esta quebrando linha', () => {
+            const Console = getModule()
+
+            const msg = []
+
+            Imports.defineConsole('log', (_params, _txt) => msg.push(_txt))
+
+            Console.log('-', { breakLine: true, })
+
+            expect(msg[1]).toEqual('')
+        })
+
+        test('Se ao receber cor de fonte, usa a cor', () => {
+            const Console = getModule()
+
+            let params
+
+            Imports.defineConsole('log', (_params, _txt) => params = _params)
+
+            Console.log('', { color: 'Red', })
+
+            expect(params).toEqual('\x1b[31m')
+        })
+
+        test('Se ao receber cor de fundo, usa a cor de fundo', () => {
+            const Console = getModule()
+
+            let params
+
+            Imports.defineConsole('log', (_params, _txt) => params = _params)
+
+            Console.log('', { fgColor: 'Red', })
+
+            expect(params).toEqual('\x1b[41m')
+        })
+
+        test('Se underscore: true,, usa o sublinhado', () => {
+            const Console = getModule()
+
+            let params
+
+            Imports.defineConsole('log', (_params, _txt) => params = _params)
+
+            Console.log('', { underscore: true, })
+
+            expect(params).toEqual('\x1b[4m')
+        })
+
+        test('Se bright: true, usa o brilho', () => {
+            const Console = getModule()
+
+            let params
+
+            Imports.defineConsole('log', (_params, _txt) => params = _params)
+
+            Console.log('', { bright: true, })
+
+            expect(params).toEqual('\x1b[1m')
+        })
+
+        test('Se ao passar todas as formatações true, usa-as', () => {
+            const Console = getModule()
+
+            let params
+
+            Imports.defineConsole('log', (_params, _txt) => params = _params)
+
+            Console.log('', {
+                fgColor: 'Red',
+                color: 'Red',
+                underscore: true,
+                bright: true,
+            })
+
+            expect(params).toEqual('\x1b[31m\x1b[41m\x1b[4m\x1b[1m')
+        })
     })
 
-    test('Se log() esta imprimindo a mensagem desejada', () => {
-        const Console = getModule()
+    describe('header()', () => {
+        test('Se escreve corretamente o cabeçalho', () => {
+            const Console = getModule()
 
-        let msg = ''
+            let msg
+            let params
 
-        global.Atlas = { config: {}, Imports, }
+            Console.log = (_msg, _params = {}) => {
+                msg = _msg
+                params = _params
+            }
 
-        Imports.defineConsole('log', _txt => msg = _txt)
+            Console.header()
 
-        Console.log('escreveu')
-
-        expect(msg).toEqual('escreveu')
+            expect(msg).toEqual('Atlas v2.0.0')
+            expect(params.clear).toEqual(true)
+            expect(params.breakLine).toEqual(true)
+            expect(params.underscore).toEqual(true)
+            expect(params.bright).toEqual(true)
+        })
     })
 
-    test('Se log() com breakLine: true esta quebrando linha', () => {
-        const Console = getModule()
+    describe('error()', () => {
+        test('Se escreve corretamente o erro', () => {
+            const Console = getModule()
 
-        const msg = []
+            let msg
+            let params
 
-        global.Atlas = { config: {}, Imports, }
+            Console.log = (_msg, _params = {}) => {
+                msg = _msg
+                params = _params
+            }
 
-        Imports.defineConsole('log', _txt => msg.push(_txt))
+            Console.error('Teste', { fgColor: 'Blue', })
 
-        Console.log('-', { breakLine: true, })
-
-        expect(msg[1]).toEqual('')
+            expect(msg).toEqual('Teste')
+            expect(params.color).toEqual('Red')
+            expect(params.fgColor).toEqual('Blue')
+        })
     })
 
-    test('Se hader() escreve corretamente o cabeçalho', () => {
-        const Console = getModule()
+    describe('warning()', () => {
+        test('Se escreve corretamente a atenção', () => {
+            const Console = getModule()
 
-        const msg = []
-        let run = false
+            let msg
+            let params
 
-        global.Atlas = { config: {}, Imports, }
+            Console.log = (_msg, _params = {}) => {
+                msg = _msg
+                params = _params
+            }
 
-        Imports.define('clear', () => run = true)
-        Imports.defineConsole('log', _txt => msg.push(_txt))
+            Console.warning('Teste', { fgColor: 'Blue', })
 
-        Console.header()
+            expect(msg).toEqual('Teste')
+            expect(params.color).toEqual('Yellow')
+            expect(params.fgColor).toEqual('Blue')
+        })
+    })
 
-        expect(msg[0]).toEqual('<--- Atlas v2.0.0 -->')
-        expect(msg[1]).toEqual('')
-        expect(run).toEqual(true)
+    describe('success()', () => {
+        test('Se escreve corretamente o sucesso', () => {
+            const Console = getModule()
+
+            let msg
+            let params
+
+            Console.log = (_msg, _params = {}) => {
+                msg = _msg
+                params = _params
+            }
+
+            Console.success('Teste', { fgColor: 'Blue', })
+
+            expect(msg).toEqual('Teste')
+            expect(params.color).toEqual('Green')
+            expect(params.fgColor).toEqual('Blue')
+        })
     })
 
     function getModule () {
@@ -67,6 +192,10 @@ describe('Console', () => {
 
         Imports.undefineAll()
 
-        return require('./Console')
+        const Console = require('./Console')
+
+        global.Atlas = { config: {}, Imports, }
+
+        return Console
     }
 })

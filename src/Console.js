@@ -37,7 +37,7 @@ class Console {
      * @param {Json} _params Parâmetros adicionais e opcionais
      */
     log (_msg, _params = {}) {
-    // Se pediu para não exibir mensagem, ignora o resto
+        // Se pediu para não exibir mensagem, ignora o resto
         if ((global.Atlas.config.Console || {}).notLog) return
 
         // Se pediu para limpar o console, limpa
@@ -52,10 +52,10 @@ class Console {
         if (_params.bright) format.push(bright)
 
         // Escreve a mensagem
-        console.log(format.join(','), _msg, reset)
+        console.log(format.join(''), _msg, reset)
 
         // Se pediu para quebrar linha, quebra
-        if (_params.breakLine) console.log('')
+        if (_params.breakLine) console.log('', '')
     }
 
     /**
