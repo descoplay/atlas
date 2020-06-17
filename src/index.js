@@ -1,3 +1,5 @@
+const path = require('path')
+
 /**
  * @name Atlas
  * @description Classe principal do framework
@@ -10,6 +12,9 @@ class Atlas {
      * @returns {Promise} Promessa contendo uma instancia do Atlas
      */
     start (_config = {}) {
+        // Define as propriedades do AtlasJS
+        this._defineProps()
+
         // Recebe as configurações do Atlas
         this.config = { ..._config, }
 
@@ -25,6 +30,25 @@ class Atlas {
 
         // Retorna promessa contendo instancia do Atlas
         return Promise.resolve(this)
+    }
+
+    /**
+     * @name _defineProps
+     * @description Define as propriedades do Atlas
+     * @access private
+     */
+    _defineProps () {
+        // Versão do AtlasJS
+        this.version = '2.0.0'
+
+        // Separador do sistema operacional
+        this.DS = path.sep
+
+        // Diretório do projeto
+        this.projectDir = path.join(process.cwd(), this.DS)
+
+        // Diretório do Atlas
+        this.atlasDir = path.join(__dirname, this.DS)
     }
 }
 

@@ -63,7 +63,7 @@ class Console {
      * @description Escreve o cabeçalho do Atlas
      */
     header () {
-        this.log('Atlas v2.0.0', {
+        this.log('Atlas v' + global.Atlas.version, {
             clear: true,
             breakLine: true,
             underscore: true,

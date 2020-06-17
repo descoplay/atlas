@@ -109,6 +109,8 @@ describe('Console', () => {
         test('Se escreve corretamente o cabeçalho', () => {
             const Console = getModule()
 
+            global.Atlas.version = '2.0.0'
+
             let msg
             let params
 

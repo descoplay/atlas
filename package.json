@@ -14,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "clear": "^0.1.0",
-    "object.map": "^1.0.1"
+    "object.map": "^1.0.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
