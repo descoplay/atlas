@@ -1,5 +1,5 @@
 describe('Console', () => {
-    const Imports = require('./Imports')
+    const TestLib = require('./TestLib')
 
     describe('log()', () => {
         test('Se com clear: true esta chamando a limeza de tela', () => {
@@ -7,8 +7,8 @@ describe('Console', () => {
 
             let run = false
 
-            Imports.define('clear', () => run = true)
-            Imports.defineConsole('log', () => {})
+            TestLib.Imports.define('clear', () => run = true)
+            TestLib.Imports.defineConsole('log', () => {})
 
             Console.log('', { clear: true, })
 
@@ -20,7 +20,7 @@ describe('Console', () => {
 
             let msg = ''
 
-            Imports.defineConsole('log', (_params, _txt) => msg = _txt)
+            TestLib.Imports.defineConsole('log', (_params, _txt) => msg = _txt)
 
             Console.log('escreveu')
 
@@ -32,7 +32,7 @@ describe('Console', () => {
 
             const msg = []
 
-            Imports.defineConsole('log', (_params, _txt) => msg.push(_txt))
+            TestLib.Imports.defineConsole('log', (_params, _txt) => msg.push(_txt))
 
             Console.log('-', { breakLine: true, })
 
@@ -44,7 +44,7 @@ describe('Console', () => {
 
             let params
 
-            Imports.defineConsole('log', (_params, _txt) => params = _params)
+            TestLib.Imports.defineConsole('log', (_params, _txt) => params = _params)
 
             Console.log('', { color: 'Red', })
 
@@ -56,7 +56,7 @@ describe('Console', () => {
 
             let params
 
-            Imports.defineConsole('log', (_params, _txt) => params = _params)
+            TestLib.Imports.defineConsole('log', (_params, _txt) => params = _params)
 
             Console.log('', { fgColor: 'Red', })
 
@@ -68,7 +68,7 @@ describe('Console', () => {
 
             let params
 
-            Imports.defineConsole('log', (_params, _txt) => params = _params)
+            TestLib.Imports.defineConsole('log', (_params, _txt) => params = _params)
 
             Console.log('', { underscore: true, })
 
@@ -80,7 +80,7 @@ describe('Console', () => {
 
             let params
 
-            Imports.defineConsole('log', (_params, _txt) => params = _params)
+            TestLib.Imports.defineConsole('log', (_params, _txt) => params = _params)
 
             Console.log('', { bright: true, })
 
@@ -92,7 +92,7 @@ describe('Console', () => {
 
             let params
 
-            Imports.defineConsole('log', (_params, _txt) => params = _params)
+            TestLib.Imports.defineConsole('log', (_params, _txt) => params = _params)
 
             Console.log('', {
                 fgColor: 'Red',
@@ -192,11 +192,9 @@ describe('Console', () => {
     function getModule () {
         delete global.Atlas
 
-        Imports.undefineAll()
+        const Console = TestLib.getModule('./Console')
 
-        const Console = require('./Console')
-
-        global.Atlas = { config: {}, Imports, }
+        global.Atlas = { config: {}, Imports: TestLib.Imports, }
 
         return Console
     }

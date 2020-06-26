@@ -45,10 +45,10 @@ class Atlas {
         this.DS = path.sep
 
         // Diretório do projeto
-        this.projectDir = path.join(process.cwd(), this.DS)
+        this.projectDir = process.cwd()
 
         // Diretório do Atlas
-        this.atlasDir = path.join(__dirname, this.DS)
+        this.atlasDir = __dirname
     }
 }
 

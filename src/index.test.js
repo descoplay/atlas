@@ -1,7 +1,5 @@
-const path = require('path')
-
 describe('Atlas', () => {
-    const Imports = require('./Imports')
+    const TestLib = require('./TestLib')
 
     describe('start()', () => {
         test('Se não teve erro', () => {
@@ -31,7 +29,7 @@ describe('Atlas', () => {
 
             let run = false
 
-            Imports.define('./Console', { header: () => run = true, })
+            TestLib.Imports.define('./Console', { header: () => run = true, })
 
             Atlas.start({ Console: { notLog: true, }, })
 
@@ -46,9 +44,9 @@ describe('Atlas', () => {
             Atlas._defineProps()
 
             expect(Atlas.version).toEqual('2.0.0')
-            expect(Atlas.DS).toEqual(path.sep)
-            expect(Atlas.projectDir).toEqual(path.join(process.cwd(), path.sep))
-            expect(Atlas.atlasDir).toEqual(path.join(__dirname, path.sep))
+            expect(Atlas.DS).toEqual(TestLib.path.sep)
+            expect(Atlas.projectDir).toEqual(process.cwd())
+            expect(Atlas.atlasDir).toEqual(__dirname)
         })
     })
 
@@ -59,8 +57,6 @@ describe('Atlas', () => {
             delete global.Atlas
         }
 
-        Imports.undefineAll()
-
-        return require('./index')
+        return TestLib.getModule('./index')
     }
 })
