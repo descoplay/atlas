@@ -57,6 +57,10 @@ describe('Atlas', () => {
             delete global.Atlas
         }
 
-        return TestLib.getModule('./index')
+        const Atlas = TestLib.getModule('./index')
+
+        TestLib.Imports.define('./Server', { start: () => {}, })
+
+        return Atlas
     }
 })

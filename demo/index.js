@@ -4,7 +4,11 @@ const config = {
     Console: {
         notLog: false,
     },
+    Server: {
+        port: 3001,
+    },
 }
+
 Atlas.start(config).then(Atlas => {
-    console.log(Atlas)
+    // console.log(Atlas)
 })

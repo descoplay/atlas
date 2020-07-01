@@ -21,12 +21,16 @@ class Atlas {
         // Importa módulos
         this.Imports = require('./Imports')
         this.Console = this.Imports.get('./Console')
+        this.Server = this.Imports.get('./Server')
 
         // Adiciona a instancia do Atlas nas propriedades globais no Node
         global.Atlas = this
 
         // Escreve o cabeçalho do Atlas na linha de comando
         this.Console.header()
+
+        // Inicia o servidor
+        this.Server.start()
 
         // Retorna promessa contendo instancia do Atlas
         return Promise.resolve(this)
@@ -49,6 +53,9 @@ class Atlas {
 
         // Diretório do Atlas
         this.atlasDir = __dirname
+
+        // Porta padrão do servidor
+        this.serverPort = 3000
     }
 }
 
