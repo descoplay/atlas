@@ -53,9 +53,6 @@ class Atlas {
 
         // Diretório do Atlas
         this.atlasDir = __dirname
-
-        // Porta padrão do servidor
-        this.serverPort = 3000
     }
 }
 
