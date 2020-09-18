@@ -109,7 +109,7 @@ describe('Console', () => {
         test('Se escreve corretamente o cabeçalho', () => {
             const Console = getModule()
 
-            global.Atlas.version = '2.0.0'
+            Atlas.version = '2.0.0'
 
             let msg
             let params
@@ -194,7 +194,7 @@ describe('Console', () => {
 
         const Console = TestLib.getModule('./Console')
 
-        global.Atlas = { config: {}, Imports: TestLib.Imports, }
+        Atlas = { config: {}, Imports: TestLib.Imports, }
 
         return Console
     }

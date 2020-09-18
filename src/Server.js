@@ -1,9 +1,3 @@
-let Express
-
-const path = require('path')
-const makeDir = require('make-dir')
-const fs = require('fs-plus')
-
 /**
  * @name Server
  * @description Módulo de servidor do Atlas
@@ -18,17 +12,17 @@ class Server {
         this._defaultConfigs()
 
         // Importa o express
-        Express = global.Atlas.Imports.get('express')()
+        this.Express = Atlas.Imports.get('express')()
 
         // Executa o roteamento
         this._router()
 
         // Porta a ser usada
-        const port = global.Atlas.config.Server.port
+        const port = Atlas.config.Server.port
 
         // Deixa o express escutando uma porta
-        Express.listen(port, () => {
-            global.Atlas.Console.success('Servidor rodando na porta ' + port)
+        this.Express.listen(port, () => {
+            Atlas.Console.success('Servidor rodando na porta ' + port)
         })
     }
 
@@ -37,31 +31,20 @@ class Server {
      * @description Executa o roteamento
      */
     async _router () {
-        const routerDir = path.join(global.Atlas.projectDir, global.Atlas.config.Server.routerDir)
+        const path = Atlas.Imports.get('path')
 
-        await makeDir(routerDir)
+        // Diretório das rotas
+        const routerDir = path.join(Atlas.projectDir, Atlas.config.Server.routerDir)
 
-        fs.listSync(routerDir).map(router => {
-            require(router)({
-                Express,
+        // Cria diretório
+        await Atlas.Imports.get('make-dir')(routerDir)
+
+        // Percorre e executa todos os diretórios
+        Atlas.Imports.get('fs-plus').listSync(routerDir).map(router => {
+            Atlas.Imports.get(router)({
+                Express: this.Express,
                 entity: path.basename(router).split('.')[0],
             })
-        })
-
-        Express.get('/get', (_req, _res) => {
-            _res.end('get')
-        })
-
-        Express.post('/post', (_req, _res) => {
-            _res.end('post')
-        })
-
-        Express.put('/put', (_req, _res) => {
-            _res.end('put')
-        })
-
-        Express.delete('/delete', (_req, _res) => {
-            _res.end('delete')
         })
     }
 
@@ -69,9 +52,9 @@ class Server {
      * @description Define configurações padrões
      */
     _defaultConfigs () {
-        global.Atlas.config.Server = global.Atlas.config.Server || {}
-        global.Atlas.config.Server.port = global.Atlas.config.Server.port || 3000
-        global.Atlas.config.Server.routerDir = global.Atlas.config.Server.routerDir || 'router'
+        Atlas.config.Server = Atlas.config.Server || {}
+        Atlas.config.Server.port = Atlas.config.Server.port || 3000
+        Atlas.config.Server.routerDir = Atlas.config.Server.routerDir || 'router'
     }
 }
 
