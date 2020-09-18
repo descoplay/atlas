@@ -45,46 +45,58 @@ class Server {
             const entity = path.basename(router).split('.')[0]
 
             // Executa rotas da entidade
-            Atlas.Imports.get(router)({ Express: this.Express, entity, })
+            Atlas.Imports.get(router)({
+                Express: this.Express,
+                Model: Atlas.Model.load(entity),
+                entity,
+            })
 
-            // As rotas e seus tipos
-            const routersTypes = {}
-
-            // Percorre as rotas do express
-            this.Express._router.stack
-                // Filtra rotas em branco
-                .filter(i => i.route && i.route.path.indexOf(`/${entity}/`) === 0)
-                // Monta json de tipos e paths das rotas
-                .map(i => routersTypes[i.route.path] = Object.keys(i.route.methods)[0])
-
-            // Se não tem rota de list, cria padrão
-            if (routersTypes[`/${entity}`] !== 'get') {
-                this.Express.get(`/${entity}`, (req, res) => {
-                    res.end('list!')
-                })
-            }
-
-            // Se não tem rota de read, cria padrão
-            if (routersTypes[`/${entity}/:id`] !== 'get') {
-                this.Express.get(`/${entity}/:id`, (req, res) => {
-                    res.end('read!')
-                })
-            }
-
-            // Se não tem rota de update, cria padrão
-            if (routersTypes[`/${entity}/:id`] !== 'put') {
-                this.Express.put(`/${entity}/:id`, (req, res) => {
-                    res.end('update!')
-                })
-            }
-
-            // Se não tem rota de delete, cria padrão
-            if (routersTypes[`/${entity}/:id`] !== 'delete') {
-                this.Express.delete(`/${entity}/:id`, (req, res) => {
-                    res.end('delete!')
-                })
-            }
+            // Rotas padrões
+            this._defaultRouters(entity)
         })
+    }
+
+    async _defaultRouters (_entity) {
+        // Modelo da entidade
+        const Model = new (await Atlas.Model.load(_entity))()
+
+        // As rotas e seus tipos
+        const routersTypes = {}
+
+        // Percorre as rotas do express
+        this.Express._router.stack
+        // Filtra rotas em branco
+            .filter(i => i.route && i.route.path.indexOf(`/${_entity}/`) === 0)
+        // Monta json de tipos e paths das rotas
+            .map(i => routersTypes[i.route.path] = Object.keys(i.route.methods)[0])
+
+        // Se não tem rota de list, cria padrão
+        if (routersTypes[`/${_entity}`] !== 'get') {
+            this.Express.get(`/${_entity}`, (req, res) => {
+                res.end('list!')
+            })
+        }
+
+        // Se não tem rota de read, cria padrão
+        if (routersTypes[`/${_entity}/:id`] !== 'get') {
+            this.Express.get(`/${_entity}/:id`, (req, res) => {
+                res.end('read!')
+            })
+        }
+
+        // Se não tem rota de update, cria padrão
+        if (routersTypes[`/${_entity}/:id`] !== 'put') {
+            this.Express.put(`/${_entity}/:id`, (req, res) => {
+                res.end('update!')
+            })
+        }
+
+        // Se não tem rota de delete, cria padrão
+        if (routersTypes[`/${_entity}/:id`] !== 'delete') {
+            this.Express.delete(`/${_entity}/:id`, (req, res) => {
+                res.end('delete!')
+            })
+        }
     }
 
     /**

@@ -21,6 +21,8 @@ class Atlas {
         // Importa módulos
         this.Imports = require('./Imports')
         this.Console = this.Imports.get('./Console')
+        this.Model = this.Imports.get('./Model')
+        this.GenericModel = this.Imports.get('./GenericModel')
         this.Server = this.Imports.get('./Server')
 
         // Adiciona a instancia do Atlas nas propriedades globais no Node
@@ -28,6 +30,9 @@ class Atlas {
 
         // Escreve o cabeçalho do Atlas na linha de comando
         this.Console.header()
+
+        // Inicia o modelo
+        this.Model.start()
 
         // Inicia o servidor
         this.Server.start()
