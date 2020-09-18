@@ -7,6 +7,8 @@ module.exports = {
     path, // Recurso de diretórios
     // Retorna um módulo limpo
     getModule (_module) {
+        delete require.cache[require.resolve[_module]]
+
         const Module = require(_module)
 
         Imports.undefineAll()

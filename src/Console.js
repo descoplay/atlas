@@ -38,10 +38,10 @@ class Console {
      */
     log (_msg, _params = {}) {
         // Se pediu para não exibir mensagem, ignora o resto
-        if ((global.Atlas.config.Console || {}).notLog) return
+        if ((Atlas.config.Console || {}).notLog) return
 
         // Se pediu para limpar o console, limpa
-        if (_params.clear) global.Atlas.Imports.get('clear')()
+        if (_params.clear) Atlas.Imports.get('clear')()
 
         // Array que conterá todas as formatações
         const format = []
@@ -63,7 +63,7 @@ class Console {
      * @description Escreve o cabeçalho do Atlas
      */
     header () {
-        this.log('Atlas v' + global.Atlas.version, {
+        this.log('Atlas v' + Atlas.version, {
             clear: true,
             breakLine: true,
             underscore: true,

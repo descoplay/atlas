@@ -9,7 +9,11 @@
     ],
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "SharedArrayBuffer": "readonly",
+        "Atlas": "writable",
+        "describe": "readonly",
+        "test": "readonly",
+        "expect": "readonly"
     },
     "parserOptions": {
         "ecmaVersion": 2018
