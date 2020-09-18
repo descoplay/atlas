@@ -66,8 +66,17 @@ describe('Server', () => {
             let fsPlusRun = false
             let routerExpress
             let routerEntity
+            const methodDefaults = {}
 
-            Server.Express = 'ok'
+            Server.Express = { _router: { stack: [], }, }
+
+            const methodTypes = [ 'get', 'put', 'delete', ]
+
+            methodTypes.map(m => {
+                Server.Express[m] = () => {
+                    methodDefaults[m] = true
+                }
+            })
 
             Imports.define('make-dir', () => makeDirRun = true)
 
@@ -88,8 +97,9 @@ describe('Server', () => {
 
             expect(makeDirRun).toEqual(true)
             expect(fsPlusRun).toEqual(true)
-            expect(routerExpress).toEqual('ok')
+            expect(typeof routerExpress.get).toEqual('function')
             expect(routerEntity).toEqual('Test')
+            expect(methodDefaults.get && methodDefaults.put && methodDefaults.delete).toEqual(true)
         })
     })
 

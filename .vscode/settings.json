@@ -15,7 +15,7 @@
     "editor.tabSize": 4,
     "gitflow4code.features": [
         {
-            "name": "feature/server_test",
+            "name": "feature/one_to_one",
             "base": "develop"
         }
     ]
