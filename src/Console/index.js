@@ -51,8 +51,14 @@ class Console {
         if (_params.underscore) format.push(underscore)
         if (_params.bright) format.push(bright)
 
+        let ident = ''
+
+        for (let c = 0; c < _params.ident || 0; c++) {
+            ident += '  '
+        }
+
         // Escreve a mensagem
-        console.log(format.join(''), _msg, reset)
+        console.log(format.join(''), ident + _msg, reset)
 
         // Se pediu para quebrar linha, quebra
         if (_params.breakLine) console.log('', '')
