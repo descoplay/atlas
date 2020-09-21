@@ -14,15 +14,21 @@ class Server {
         // Importa o express
         this.Express = Atlas.Imports.get('express')()
 
+        Atlas.Console.log('Executando o roteamento')
+
         // Executa o roteamento
         this._router()
+
+        Atlas.Console.success('Feito', { ident: 1, })
 
         // Porta a ser usada
         const port = Atlas.config.Server.port
 
+        Atlas.Console.log('Iniciando a escuta do servidor na porta')
+
         // Deixa o express escutando uma porta
         this.Express.listen(port, () => {
-            Atlas.Console.success('Servidor rodando na porta ' + port)
+            Atlas.Console.success('Servidor rodando na porta ' + port, { ident: 1, })
         })
     }
 
