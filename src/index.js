@@ -11,7 +11,7 @@ class Atlas {
      * @param {JSON} _config Configurações do Atlas
      * @returns {Promise} Promessa contendo uma instancia do Atlas
      */
-    start (_config = {}) {
+    async start (_config = {}) {
         // Define as propriedades do AtlasJS
         this._defineProps()
 
@@ -23,6 +23,7 @@ class Atlas {
         this.Console = this.Imports.get('./Console')
         this.Model = this.Imports.get('./Model')
         this.GenericModel = this.Imports.get('./GenericModel')
+        this.Db = this.Imports.get('./Db')
         this.Server = this.Imports.get('./Server')
 
         // Adiciona a instancia do Atlas nas propriedades globais no Node
@@ -33,6 +34,9 @@ class Atlas {
 
         // Inicia o modelo
         this.Model.start()
+
+        // Inicia o banco
+        await this.Db.start()
 
         // Inicia o servidor
         this.Server.start()

@@ -1,5 +1,5 @@
 describe('Console', () => {
-    const TestLib = require('./TestLib')
+    const TestLib = require('../TestLib')
 
     describe('log()', () => {
         test('Se com clear: true esta chamando a limeza de tela', () => {

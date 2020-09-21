@@ -1,7 +1,7 @@
-const Imports = require('./Imports')
+const Imports = require('../Imports')
 
 describe('Server', () => {
-    const TestLib = require('./TestLib')
+    const TestLib = require('../TestLib')
 
     describe('start()', () => {
         test('Se esta rodando corretamente', () => {
